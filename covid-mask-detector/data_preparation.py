@@ -1,6 +1,7 @@
 """ Add images into a pandas Dataframe
 """
 from pathlib import Path
+
 import cv2
 import pandas as pd
 from google_drive_downloader import GoogleDriveDownloader as gdd
@@ -25,7 +26,7 @@ for subject in tqdm(list(maskPath.iterdir()), desc='mask photos'):
         image = cv2.imread(str(imgPath))
         maskDF = maskDF.append({
             'image': image,
-            'mask': True
+            'mask': 1
         }, ignore_index=True)
 
 for subject in tqdm(list(nonMaskPath.iterdir()), desc='non mask photos'):
@@ -33,7 +34,7 @@ for subject in tqdm(list(nonMaskPath.iterdir()), desc='non mask photos'):
         image = cv2.imread(str(imgPath))
         maskDF = maskDF.append({
             'image': image,
-            'mask': False
+            'mask': 0
         }, ignore_index=True)
 
 dfName = 'data/mask_df.pickle'
