@@ -28,3 +28,5 @@ Usage: video.py [OPTIONS] MODELPATH VIDEOPATH
 Options:
   --output PATH  specify output path to save video with annotations
 ```
+
+[Check Medium post](https://medium.com/@jad.haddad92/how-i-built-a-face-mask-detector-for-covid-19-using-pytorch-lightning-67eb3752fd61)
