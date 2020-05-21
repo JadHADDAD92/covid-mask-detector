@@ -1,0 +1,11 @@
+click==7.1.2
+opencv_python==4.2.0.34
+torch==1.4.0
+torchvision==0.5.0
+numpy==1.16.2
+pandas==0.23.3+dfsg
+scikit_video==1.1.11
+pytorch_lightning==0.7.2
+tqdm==4.46.0
+googledrivedownloader==0.4
+scikit_learn==0.23.1
