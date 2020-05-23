@@ -5,6 +5,7 @@
 ```Shell
 git clone git@github.com:JadHADDAD92/covid-mask-detector.git
 cd covid-mask-detector
+python -m covid-mask-detector.data_preparation
 ```
 ## Training
 
