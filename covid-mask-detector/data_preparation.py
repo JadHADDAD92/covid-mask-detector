@@ -2,7 +2,6 @@
 """
 from pathlib import Path
 
-import cv2
 import pandas as pd
 from google_drive_downloader import GoogleDriveDownloader as gdd
 from tqdm import tqdm
@@ -23,17 +22,15 @@ maskDF = pd.DataFrame()
 
 for subject in tqdm(list(maskPath.iterdir()), desc='mask photos'):
     for imgPath in subject.iterdir():
-        image = cv2.imread(str(imgPath))
         maskDF = maskDF.append({
-            'image': image,
+            'image': str(imgPath),
             'mask': 1
         }, ignore_index=True)
 
 for subject in tqdm(list(nonMaskPath.iterdir()), desc='non mask photos'):
     for imgPath in subject.iterdir():
-        image = cv2.imread(str(imgPath))
         maskDF = maskDF.append({
-            'image': image,
+            'image': str(imgPath),
             'mask': 0
         }, ignore_index=True)
 
