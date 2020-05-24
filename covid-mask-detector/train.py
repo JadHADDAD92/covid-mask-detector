@@ -126,7 +126,7 @@ class MaskDetector(pl.LightningModule):
         return {'val_loss': avgLoss, 'log': tensorboardLogs}
 
 if __name__ == '__main__':
-    model = MaskDetector(Path('covid-mask-detector/data/mask_df.pickle'))
+    model = MaskDetector(Path('data/mask_df.pickle'))
     
     checkpoint_callback = ModelCheckpoint(
         filepath='covid-mask-detector/checkpoints/weights.ckpt',
