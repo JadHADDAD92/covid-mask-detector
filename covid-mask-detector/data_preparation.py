@@ -8,14 +8,14 @@ from tqdm import tqdm
 
 # download dataset from link provided by
 # https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset
-datasetPath = Path('data/mask.zip')
+datasetPath = Path('covid-mask-detector/data/mask.zip')
 gdd.download_file_from_google_drive(file_id='1UlOk6EtiaXTHylRUx2mySgvJX9ycoeBp',
                                     dest_path=str(datasetPath),
                                     unzip=True)
 # delete zip file
 datasetPath.unlink()
 
-datasetPath = Path('data/self-built-masked-face-recognition-dataset')
+datasetPath = Path('covid-mask-detector/data/self-built-masked-face-recognition-dataset')
 maskPath = datasetPath/'AFDB_masked_face_dataset'
 nonMaskPath = datasetPath/'AFDB_face_dataset'
 maskDF = pd.DataFrame()
@@ -34,6 +34,6 @@ for subject in tqdm(list(nonMaskPath.iterdir()), desc='non mask photos'):
             'mask': 0
         }, ignore_index=True)
 
-dfName = 'data/mask_df.pickle'
+dfName = 'covid-mask-detector/data/mask_df.pickle'
 print(f'saving Dataframe to: {dfName}')
 maskDF.to_pickle(dfName)
