@@ -135,7 +135,7 @@ if __name__ == '__main__':
         monitor='val_acc',
         mode='max'
     )
-    trainer = Trainer(gpus=1,
+    trainer = Trainer(gpus=1 if torch.cuda.is_available() else 0,
                       max_epochs=10,
                       checkpoint_callback=checkpoint_callback,
                       profiler=True)
