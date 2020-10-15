@@ -3,7 +3,7 @@
 ![samples](images/testmask.gif)
 # Reproduction
 ```Shell
-git clone git@github.com:JadHADDAD92/covid-mask-detector.git
+git clone https://github.com/JadHADDAD92/covid-mask-detector.git
 cd covid-mask-detector
 
 # Download dataset and export it to pandas DataFrame
