@@ -2,8 +2,8 @@ click==7.1.2
 opencv_python==4.5.1.48
 torch==1.8.0
 torchvision==0.5.0
-numpy==1.16.2
-pandas==0.23.3+dfsg
+numpy==1.20.1
+pandas==1.2.3
 scikit_video==1.1.11
 pytorch_lightning==1.2.3
 tqdm==4.59.0
