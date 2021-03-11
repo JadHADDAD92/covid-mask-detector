@@ -9,8 +9,8 @@ import torch
 import torch.nn.init as init
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
-from sklearn.metrics import accuracy_score
 from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.metrics import Accuracy
 from sklearn.model_selection import train_test_split
 from torch import Tensor
 from torch.nn import (Conv2d, CrossEntropyLoss, Linear, MaxPool2d, ReLU,
@@ -34,6 +34,13 @@ class MaskDetector(pl.LightningModule):
         self.validateDF = None
         self.crossEntropyLoss = None
         self.learningRate = 0.00001
+        
+        # Metrics
+        self.trainAcc = Accuracy()
+        self.trainAcc.persistent()
+        
+        self.valAcc = Accuracy()
+        self.valAcc.persistent()
         
         self.convLayer1 = convLayer1 = Sequential(
             Conv2d(3, 32, kernel_size=(3, 3), padding=(1, 1)),
@@ -104,7 +111,13 @@ class MaskDetector(pl.LightningModule):
         outputs = self.forward(inputs)
         loss = self.crossEntropyLoss(outputs, labels)
         
+        _, outputs = torch.max(outputs, dim=1)
+        self.trainAcc(outputs, labels)
         self.log('train_loss', loss, on_step=False, on_epoch=True, prog_bar=False)
+    
+    def training_epoch_end(self, _trainingStepOutputs): # pylint: disable=arguments-differ
+        self.log('train_acc', self.trainAcc.compute() * 100, prog_bar=True)
+        self.trainAcc.reset()
     
     def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]: # pylint: disable=arguments-differ
         inputs, labels = batch['image'], batch['mask']
@@ -113,17 +126,18 @@ class MaskDetector(pl.LightningModule):
         loss = self.crossEntropyLoss(outputs, labels)
         
         _, outputs = torch.max(outputs, dim=1)
-        valAcc = accuracy_score(outputs.cpu(), labels.cpu())
-        valAcc = torch.tensor(valAcc)
-        
-        return {'val_loss': loss, 'val_acc':valAcc}
+        self.valAcc(outputs, labels)
+        return {'val_loss': loss}
     
     def validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) \
             -> Dict[str, Union[Tensor, Dict[str, Tensor]]]:
         avgLoss = torch.stack([x['val_loss'] for x in outputs]).mean()
-        avgAcc = torch.stack([x['val_acc'] for x in outputs]).mean()
+        
+        valAcc = self.valAcc.compute() * 100
+        self.valAcc.reset()
+        
         self.log('val_loss', avgLoss, prog_bar=True)
-        self.log('val_acc', avgAcc, prog_bar=True)
+        self.log('val_acc', valAcc, prog_bar=True)
 
 if __name__ == '__main__':
     model = MaskDetector(Path('covid-mask-detector/data/mask_df.pickle'))
