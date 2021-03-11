@@ -10,6 +10,7 @@ import torch.nn.init as init
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from sklearn.metrics import accuracy_score
+from pytorch_lightning.loggers import TensorBoardLogger
 from sklearn.model_selection import train_test_split
 from torch import Tensor
 from torch.nn import (Conv2d, CrossEntropyLoss, Linear, MaxPool2d, ReLU,
@@ -103,8 +104,7 @@ class MaskDetector(pl.LightningModule):
         outputs = self.forward(inputs)
         loss = self.crossEntropyLoss(outputs, labels)
         
-        tensorboardLogs = {'train_loss': loss}
-        return {'loss': loss, 'log': tensorboardLogs}
+        self.log('train_loss', loss, on_step=False, on_epoch=True, prog_bar=False)
     
     def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]: # pylint: disable=arguments-differ
         inputs, labels = batch['image'], batch['mask']
@@ -122,14 +122,15 @@ class MaskDetector(pl.LightningModule):
             -> Dict[str, Union[Tensor, Dict[str, Tensor]]]:
         avgLoss = torch.stack([x['val_loss'] for x in outputs]).mean()
         avgAcc = torch.stack([x['val_acc'] for x in outputs]).mean()
-        tensorboardLogs = {'val_loss': avgLoss, 'val_acc':avgAcc}
-        return {'val_loss': avgLoss, 'log': tensorboardLogs}
+        self.log('val_loss', avgLoss, prog_bar=True)
+        self.log('val_acc', avgAcc, prog_bar=True)
 
 if __name__ == '__main__':
     model = MaskDetector(Path('covid-mask-detector/data/mask_df.pickle'))
-    
+    logger = TensorBoardLogger("tensorboard", name="covid-mask-detector",
+                               default_hp_metric=False)
     checkpoint_callback = ModelCheckpoint(
-        filepath='covid-mask-detector/checkpoints/weights.ckpt',
+        filename='{epoch}-{val_loss:.2f}-{val_acc:.2f}',
         save_weights_only=True,
         verbose=True,
         monitor='val_acc',
