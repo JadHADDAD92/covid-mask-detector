@@ -6,6 +6,6 @@ numpy==1.16.2
 pandas==0.23.3+dfsg
 scikit_video==1.1.11
 pytorch_lightning==0.7.2
-tqdm==4.46.0
+tqdm==4.60.0
 googledrivedownloader==0.4
 scikit_learn==0.23.1
