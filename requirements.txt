@@ -8,4 +8,4 @@ scikit_video==1.1.11
 pytorch_lightning==0.7.2
 tqdm==4.46.0
 googledrivedownloader==0.4
-scikit_learn==0.23.1
+scikit_learn==0.24.2
