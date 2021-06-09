@@ -75,7 +75,7 @@ class MaskDetector(pl.LightningModule):
         return out
     
     def prepare_data(self) -> None:
-        self.maskDF = maskDF = pd.read_pickle(self.maskDFPath)
+        self.maskDF = maskDF = pd.read_csv(self.maskDFPath)
         train, validate = train_test_split(maskDF, test_size=0.3, random_state=0,
                                            stratify=maskDF['mask'])
         self.trainDF = MaskDataset(train)
