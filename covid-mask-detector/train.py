@@ -21,6 +21,7 @@ from torch.utils.data import DataLoader
 from .dataset import MaskDataset
 
 
+# pylint: disable=not-callable
 class MaskDetector(pl.LightningModule):
     """ MaskDetector PyTorch Lightning class
     """
