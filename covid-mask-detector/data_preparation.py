@@ -34,6 +34,6 @@ for subject in tqdm(list(nonMaskPath.iterdir()), desc='non mask photos'):
             'mask': 0
         }, ignore_index=True)
 
-dfName = 'covid-mask-detector/data/mask_df.pickle'
+dfName = 'covid-mask-detector/data/mask_df.csv'
 print(f'saving Dataframe to: {dfName}')
-maskDF.to_pickle(dfName)
+maskDF.to_csv(dfName)
