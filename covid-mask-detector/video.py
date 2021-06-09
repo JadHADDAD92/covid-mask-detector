@@ -25,9 +25,10 @@ def tagVideo(modelpath, videopath, outputPath=None):
     """ detect if persons in video are wearing masks or not
     """
     model = MaskDetector()
-    model.load_state_dict(torch.load(modelpath)['state_dict'], strict=False)
-    
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model.load_state_dict(torch.load(modelpath, map_location=device)['state_dict'],
+                          strict=False)
+    
     model = model.to(device)
     model.eval()
     
