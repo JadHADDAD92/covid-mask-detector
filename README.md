@@ -1,3 +1,4 @@
+[![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/JadHADDAD92/covid-mask-detector/blob/master/LICENSE)
 [![CodeQL](https://github.com/JadHADDAD92/covid-mask-detector/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/JadHADDAD92/covid-mask-detector/actions/workflows/codeql-analysis.yml)
 
 <a href="https://www.buymeacoffee.com/jadhaddad" target="_blank">
