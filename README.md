@@ -1,3 +1,4 @@
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/JadHADDAD92/covid-mask-detector)
 [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/JadHADDAD92/covid-mask-detector/blob/master/LICENSE)
 [![CodeQL](https://github.com/JadHADDAD92/covid-mask-detector/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/JadHADDAD92/covid-mask-detector/actions/workflows/codeql-analysis.yml)
 
